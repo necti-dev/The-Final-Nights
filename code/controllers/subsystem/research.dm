@@ -1,6 +1,7 @@
 
 SUBSYSTEM_DEF(research)
 	name = "Research"
+	flags = SS_NO_FIRE|SS_NO_INIT // Research subsystem deactivated
 	priority = FIRE_PRIORITY_RESEARCH
 	wait = 10
 	init_order = INIT_ORDER_RESEARCH
