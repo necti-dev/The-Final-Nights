@@ -31,3 +31,5 @@ GLOBAL_VAR_INIT(lasombraname, "")
 GLOBAL_VAR_INIT(tremerename, "")
 GLOBAL_VAR_INIT(voivodename, "")
 GLOBAL_VAR_INIT(harpyname, "")
+
+GLOBAL_LIST_INIT(triad_contacts, list())
