@@ -1052,11 +1052,21 @@
 /obj/item/vamp/phone/triads_soldier/Initialize()
 	. = ..()
 	for (var/name in GLOB.triad_contacts)
-		if (name == owner)
+		var/datum/weakref/phone_ref = GLOB.triad_contacts[name]
+		var/obj/item/vamp/phone/their_phone = phone_ref.resolve()
+		if (isnull(their_phone)) // Physical phone item was destroyed.
 			continue
-		var/datum/phonecontact/contact = new()
-		contact.name = "Associate - [name]"
-		contact.number = GLOB.triad_contacts[name]
-		contacts += contact
 
-	GLOB.triad_contacts[owner] = number
+		// We add their contact to our phone.
+		var/datum/phonecontact/their_contact = new()
+		their_contact.name = "Associate - [their_phone.owner]"
+		their_contact.number = their_phone.number
+		contacts += their_contact
+
+		//We also add our contact to their phone.
+		var/datum/phonecontact/our_contact = new()
+		our_contact.name = "Associate - [owner]"
+		our_contact.number = number
+		their_phone.contacts += our_contact
+
+	GLOB.triad_contacts[owner] = WEAKREF(src)
