@@ -153,13 +153,3 @@
 		name = GLOB.harpyname + " - " + name
 		return TRUE
 	..()
-
-/datum/phonecontact/triads
-	name = "Associate"
-
-/datum/phonecontact/harpy/check_global_contacts()
-	if(number != GLOB.harpynumber && name_check != GLOB.harpyname)
-		number = GLOB.harpynumber
-		name = GLOB.harpyname + " - " + name
-		return TRUE
-	..()
