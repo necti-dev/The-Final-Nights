@@ -1048,3 +1048,15 @@
 	contacts += ENDRONAFFAIRS
 	var/datum/phonecontact/endronsecchief/ENDRONSECCHIEF = new()
 	contacts += ENDRONSECCHIEF
+
+/obj/item/vamp/phone/triads_soldier/Initialize()
+	. = ..()
+	for (var/name in GLOB.triad_contacts)
+		if (name == owner)
+			continue
+		var/datum/phonecontact/contact = new()
+		contact.name = "Associate - [name]"
+		contact.number = GLOB.triad_contacts[name]
+		contacts += contact
+
+	GLOB.triad_contacts[owner] = number

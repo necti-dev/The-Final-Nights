@@ -39,3 +39,5 @@ GLOBAL_VAR_INIT(endronleadname, "")
 GLOBAL_VAR_INIT(endronexecname, "")
 GLOBAL_VAR_INIT(endronaffairsname, "")
 GLOBAL_VAR_INIT(endronsecchiefname, "")
+
+GLOBAL_LIST_INIT(triad_contacts, list())
