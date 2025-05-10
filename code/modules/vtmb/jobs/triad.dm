@@ -23,7 +23,6 @@
 	duty = "Make money, do drugs, fight law. Your hideout is the laundromat in Chinatown."
 	experience_addition = 10
 	minimal_masquerade = 0
-	my_contact_is_important = FALSE
 
 /datum/outfit/job/triad_soldier/pre_equip(mob/living/carbon/human/H)
 	..()
