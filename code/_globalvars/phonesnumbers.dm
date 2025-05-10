@@ -1,4 +1,4 @@
-// Important Numbers
+// Important Contacts
 
 GLOBAL_VAR_INIT(princenumber, "")
 GLOBAL_VAR_INIT(sheriffnumber, "")
@@ -18,8 +18,9 @@ GLOBAL_VAR_INIT(endronleadnumber, "")
 GLOBAL_VAR_INIT(endronexecnumber, "")
 GLOBAL_VAR_INIT(endronaffairsnumber, "")
 GLOBAL_VAR_INIT(endronsecchiefnumber, "")
+GLOBAL_LIST_INIT(important_contacts, alist())
 
-// Important Names for contacts
+// Contact Networks
 
 GLOBAL_VAR_INIT(princename, "")
 GLOBAL_VAR_INIT(sheriffname, "")
@@ -41,3 +42,12 @@ GLOBAL_VAR_INIT(endronaffairsname, "")
 GLOBAL_VAR_INIT(endronsecchiefname, "")
 
 GLOBAL_LIST_INIT(triad_contacts, list())
+GLOBAL_LIST_INIT(millenium_tower_network, list())
+GLOBAL_LIST_INIT(lasombra_network, list())
+GLOBAL_LIST_INIT(tremere_network, list())
+GLOBAL_LIST_INIT(giovanni_network, list())
+GLOBAL_LIST_INIT(tzmisce_network, list())
+GLOBAL_LIST_INIT(anarch_network, list())
+GLOBAL_LIST_INIT(warehouse_network, list())
+GLOBAL_LIST_INIT(triads_network, list())
+GLOBAL_LIST_INIT(vampire_leader_network, list())
