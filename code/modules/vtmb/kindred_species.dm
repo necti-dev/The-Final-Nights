@@ -130,7 +130,7 @@
 		dat += "[humanity]<BR>"
 
 		var/datum/phonecontact/clane_leader_contact = GLOB.important_contacts[host.clane.name]
-		if (!isnull(clane_leader_contact))
+		if (!isnull(clane_leader_contact) && host.real_name != clane_leader_contact.name)
 			var/clane_leader_number = isnull(clane_leader_contact.number) ? "unknown" : clane_leader_contact.number
 			dat += " My clane leader is [clane_leader_contact.name]. Their phone number is [clane_leader_number].<BR>"
 
