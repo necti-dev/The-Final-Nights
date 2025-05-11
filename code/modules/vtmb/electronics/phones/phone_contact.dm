@@ -1,8 +1,8 @@
-/datum/contact_networks
+/datum/contact_network
 	var/list/contacts = null
 	var/our_role = null
 
-/datum/contact_networks/New(list/contacts, our_role)
+/datum/contact_network/New(list/contacts, our_role)
 	src.contacts = contacts
 	src.our_role = our_role
 
