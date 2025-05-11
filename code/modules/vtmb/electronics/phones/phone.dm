@@ -842,17 +842,11 @@
 		, new /datum/contact_networks(GLOB.vampire_leader_network, our_role = "Anarchy Rose Representative")
 		)
 
-/obj/item/vamp/phone/bruiser
-	exchange_num = 485
-
 /obj/item/vamp/phone/bruiser/Initialize()
 	. = ..()
 	contact_networks = list(
 		new /datum/contact_networks(GLOB.anarch_network, our_role = "Club Bouncer")
 		)
-
-/obj/item/vamp/phone/sweeper
-	exchange_num = 485
 
 /obj/item/vamp/phone/sweeper/Initialize()
 	. = ..()
@@ -872,71 +866,54 @@
 		, new /datum/contact_networks(GLOB.vampire_leader_network, our_role = "Warehouse Manager")
 		)
 
-/obj/item/vamp/phone/supply_tech
-	exchange_num = 485
-
 /obj/item/vamp/phone/supply_tech/Initialize()
 	. = ..()
 	contact_networks = list(
 		new /datum/contact_networks(GLOB.warehouse_network, our_role = "Supply Technician")
 		)
 
+// ENDRON
+
+/obj/item/vamp/phone/endron_lead
+	exchange_num = 485
+
+/obj/item/vamp/phone/endron_lead/Initialize()
+	. = ..()
+	contact_networks = list(
+		new /datum/contact_networks(GLOB.endron_network, our_role = "Endron Branch Lead")
+		)
+
+/obj/item/vamp/phone/endron_exec/Initialize()
+	. = ..()
+	contact_networks = list(
+		new /datum/contact_networks(GLOB.endron_network, our_role = "Endron Executive")
+		)
+
+/obj/item/vamp/phone/endron_affairs/Initialize()
+	. = ..()
+	contact_networks = list(
+		new /datum/contact_networks(GLOB.endron_network, our_role = "Endron Internal Affairs Agent")
+		)
+
+/obj/item/vamp/phone/endron_sec_chief/Initialize()
+	. = ..()
+	contact_networks = list(
+		new /datum/contact_networks(GLOB.endron_network, our_role = "Endron Chief of Security")
+		)
+
+/obj/item/vamp/phone/endron_security/Initialize()
+	. = ..()
+	contact_networks = list(
+		new /datum/contact_networks(GLOB.endron_network, our_role = "Endron Security Agent")
+		)
+
+/obj/item/vamp/phone/endron_employee/Initialize()
+	. = ..()
+	contact_networks = list(
+		new /datum/contact_networks(GLOB.endron_network, our_role = "Endron Employee")
+		)
+
 // TRIADS
-
-/obj/item/vamp/phone/endronlead/Initialize()
-	..()
-	GLOB.endronleadnumber = number
-	GLOB.endronleadname = owner
-	var/datum/phonecontact/endronexec/ENDRONEXEC = new()
-	contacts += ENDRONEXEC
-	var/datum/phonecontact/endronaffairs/ENDRONAFFAIRS = new()
-	contacts += ENDRONAFFAIRS
-	var/datum/phonecontact/endronsecchief/ENDRONSECCHIEF = new()
-	contacts += ENDRONSECCHIEF
-
-/obj/item/vamp/phone/endronexec/Initialize()
-	..()
-	GLOB.endronexecnumber = number
-	GLOB.endronexecname = owner
-	var/datum/phonecontact/endronlead/ENDRONLEAD = new()
-	contacts += ENDRONLEAD
-	var/datum/phonecontact/endronaffairs/ENDRONAFFAIRS = new()
-	contacts += ENDRONAFFAIRS
-	var/datum/phonecontact/endronsecchief/ENDRONSECCHIEF = new()
-	contacts += ENDRONSECCHIEF
-
-/obj/item/vamp/phone/endronaffairs/Initialize()
-	..()
-	GLOB.endronaffairsnumber = number
-	GLOB.endronaffairsname = owner
-	var/datum/phonecontact/endronlead/ENDRONLEAD = new()
-	contacts += ENDRONLEAD
-	var/datum/phonecontact/endronexec/ENDRONEXEC = new()
-	contacts += ENDRONEXEC
-	var/datum/phonecontact/endronsecchief/ENDRONSECCHIEF = new()
-	contacts += ENDRONSECCHIEF
-
-/obj/item/vamp/phone/endronsecchief/Initialize()
-	..()
-	GLOB.endronsecchiefnumber = number
-	GLOB.endronsecchiefname = owner
-	var/datum/phonecontact/endronlead/ENDRONLEAD = new()
-	contacts += ENDRONLEAD
-	var/datum/phonecontact/endronexec/ENDRONEXEC = new()
-	contacts += ENDRONEXEC
-	var/datum/phonecontact/endronaffairs/ENDRONAFFAIRS = new()
-	contacts += ENDRONAFFAIRS
-
-/obj/item/vamp/phone/endron/Initialize()
-	..()
-	var/datum/phonecontact/endronlead/ENDRONLEAD = new()
-	contacts += ENDRONLEAD
-	var/datum/phonecontact/endronexec/ENDRONEXEC = new()
-	contacts += ENDRONEXEC
-	var/datum/phonecontact/endronaffairs/ENDRONAFFAIRS = new()
-	contacts += ENDRONAFFAIRS
-	var/datum/phonecontact/endronsecchief/ENDRONSECCHIEF = new()
-	contacts += ENDRONSECCHIEF
 
 /obj/item/vamp/phone/triads_soldier/Initialize()
 	. = ..()
@@ -978,7 +955,6 @@
 			//We also add our contact to their phone.
 			their_phone.contacts += new /datum/phonecontact(our_name, our_contact.number)
 			if(isliving(their_phone.loc))
-				our_name
 				to_chat(their_phone.loc, span_notice("A phone contact works again: that of [our_name]."))
 
 	network.contacts[owner] = our_contact
