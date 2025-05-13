@@ -41,10 +41,10 @@
 	if(ishuman(M) && source.force && source.get_sharpness())
 		var/mob/living/carbon/human/H = M
 		if((user.pulling == H && user.grab_state >= GRAB_AGGRESSIVE) && user.zone_selected == BODY_ZONE_HEAD) // Only aggressive grabbed can be sliced.
-			if(H.has_status_effect(/datum/status_effect/neck_slice))
-				INVOKE_ASYNC(src, PROC_REF(startDecap), source, H, user)
+			if(!H.has_status_effect(/datum/status_effect/neck_slice))
+				INVOKE_ASYNC(src, PROC_REF(startNeckSlice), source, H, user)
 				return COMPONENT_CANCEL_ATTACK_CHAIN
-			INVOKE_ASYNC(src, PROC_REF(startNeckSlice), source, H, user)
+			INVOKE_ASYNC(src, PROC_REF(startDecap), source, H, user)
 			return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/component/butchering/proc/startButcher(obj/item/source, mob/living/M, mob/living/user)
@@ -109,7 +109,7 @@
 	log_combat(user, victim, "starts decapitating")
 
 	playsound(victim.loc, butcher_sound, 50, TRUE, -1)
-	if(!do_mob(user, victim, clamp(500 / source.force, 30, 100)) && victim.Adjacent(source))
+	if(!do_mob(user, victim, 10 SECONDS) && victim.Adjacent(source))
 		return
 	if(!victim.get_bodypart(BODY_ZONE_HEAD))
 		user.show_message(
