@@ -44,7 +44,7 @@
 			if(!H.has_status_effect(/datum/status_effect/neck_slice))
 				INVOKE_ASYNC(src, PROC_REF(startNeckSlice), source, H, user)
 				return COMPONENT_CANCEL_ATTACK_CHAIN
-			INVOKE_ASYNC(src, PROC_REF(startDecap), source, H, user)
+			INVOKE_ASYNC(src, PROC_REF(start_decap), source, H, user)
 			return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/component/butchering/proc/startButcher(obj/item/source, mob/living/M, mob/living/user)
@@ -82,7 +82,7 @@
 			screaming_through_a_slit_throat.apply_wound(slit_throat)
 		H.apply_status_effect(/datum/status_effect/neck_slice)
 
-/datum/component/butchering/proc/startDecap(obj/item/source, mob/living/carbon/human/victim, mob/living/user)
+/datum/component/butchering/proc/start_decap(obj/item/source, mob/living/carbon/human/victim, mob/living/user)
 	if(DOING_INTERACTION_WITH_TARGET(user, victim))
 		to_chat(user, "<span class='warning'>You're already interacting with [victim]!</span>")
 		return
