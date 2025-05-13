@@ -42,8 +42,7 @@
 		var/mob/living/carbon/human/H = M
 		if((user.pulling == H && user.grab_state >= GRAB_AGGRESSIVE) && user.zone_selected == BODY_ZONE_HEAD) // Only aggressive grabbed can be sliced.
 			if(H.has_status_effect(/datum/status_effect/neck_slice))
-				user.show_message("<span class='warning'>[H]'s neck has already been already cut, you can't make the bleeding any worse!</span>", MSG_VISUAL, \
-								"<span class='warning'>Their neck has already been already cut, you can't make the bleeding any worse!</span>")
+				INVOKE_ASYNC(src, PROC_REF(startDecap), source, H, user)
 				return COMPONENT_CANCEL_ATTACK_CHAIN
 			INVOKE_ASYNC(src, PROC_REF(startNeckSlice), source, H, user)
 			return COMPONENT_CANCEL_ATTACK_CHAIN
@@ -82,6 +81,51 @@
 			var/datum/wound/slash/critical/screaming_through_a_slit_throat = new
 			screaming_through_a_slit_throat.apply_wound(slit_throat)
 		H.apply_status_effect(/datum/status_effect/neck_slice)
+
+/datum/component/butchering/proc/startDecap(obj/item/source, mob/living/carbon/human/victim, mob/living/user)
+	if(DOING_INTERACTION_WITH_TARGET(user, victim))
+		to_chat(user, "<span class='warning'>You're already interacting with [victim]!</span>")
+		return
+	
+	if(!victim.get_bodypart(BODY_ZONE_HEAD))
+		user.show_message(
+			span_warning("[victim]'s has no neck left to cut!")
+			, MSG_VISUAL
+			, span_warning("They have no neck left to cut!")
+			)
+
+	user.visible_message(
+		span_danger("[user] is cutting [victim]'s head off!")
+		, span_danger("You start slicing what remains of [victim]'s neck!")
+		, span_hear("You hear a sick cutting and crunching noise!")
+		, ignored_mobs = victim
+		)
+	victim.show_message(
+		span_userdanger("What remains of your neck is being cut by [user]!")
+		, MSG_VISUAL
+		, span_userdanger("Something is cutting what remains of your neck!")
+		, NONE
+		)
+	log_combat(user, victim, "starts decapitating")
+
+	playsound(victim.loc, butcher_sound, 50, TRUE, -1)
+	if(!do_mob(user, victim, clamp(500 / source.force, 30, 100)) && victim.Adjacent(source))
+		return
+	if(!victim.get_bodypart(BODY_ZONE_HEAD))
+		user.show_message(
+			span_warning("[victim] has already been decapitated!")
+			, MSG_VISUAL
+			, span_warning("Their head has already been already cut off!")
+			)
+		return
+
+	victim.visible_message(
+		span_danger("[user] cuts [victim]'s head off!")
+		, span_userdanger("[user] cuts your head off...")
+		)
+	log_combat(user, victim, "finishes decapitating")
+	var/obj/item/bodypart/lost_head = victim.get_bodypart(BODY_ZONE_HEAD)
+	lost_head.dismember(BRUTE)
 
 /**
  * Handles a user butchering a target
