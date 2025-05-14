@@ -11,17 +11,16 @@
 	activate_sound = 'code/modules/wod13/sounds/celerity_activate.ogg'
 	deactivate_sound = 'code/modules/wod13/sounds/celerity_deactivate.ogg'
 
-/datum/discipline_power/celerity/proc/celerity_visual(datum/discipline_power/celerity/source, atom/newloc, dir)
+// Proc override. We have a custom way to check for masquerade violations here.
+/datum/discipline_power/celerity/do_masquerade_violation(atom/target)
+	return
+
+/datum/discipline_power/celerity/proc/celerity_visual(datum/discipline_power/celerity/source, atom/old_loc, dir, forced = FALSE)
 	SIGNAL_HANDLER
 
-	spawn()
-		var/obj/effect/celerity/C = new(owner.loc)
-		C.name = owner.name
-		C.appearance = owner.appearance
-		C.dir = owner.dir
-		animate(C, pixel_x = rand(-16, 16), pixel_y = rand(-16, 16), alpha = 0, time = 0.5 SECONDS)
-		if(owner.CheckEyewitness(owner, owner, 7, FALSE))
-			owner.AdjustMasquerade(-1)
+	new /obj/effect/celerity(get_turf(old_loc), owner.name, owner.appearance, owner.dir)
+	if(violates_masquerade && COOLDOWN_FINISHED(src, owner.last_masquerade_violation) && owner.CheckEyewitness(owner, owner, 7, FALSE))
+		owner.AdjustMasquerade(-1)
 
 /datum/discipline_power/celerity/proc/temporis_explode(datum/source, datum/discipline_power/power, atom/target)
 	SIGNAL_HANDLER
@@ -40,10 +39,13 @@
 	desc = "..."
 	anchored = TRUE
 
-/obj/effect/celerity/Initialize()
+/obj/effect/celerity/Initialize(mapload, name, appearance, dir)
 	. = ..()
-	spawn(0.5 SECONDS)
-		qdel(src)
+	name = name
+	appearance = appearance
+	dir = dir
+	animate(src, pixel_x = rand(-16, 16), pixel_y = rand(-16, 16), alpha = 0, time = 0.5 SECONDS)
+	QDEL_IN(src, 0.5 SECONDS)
 
 //CELERITY 1
 /datum/movespeed_modifier/celerity
@@ -54,7 +56,7 @@
 	desc = "Enhances your speed to make everything a little bit easier."
 
 	check_flags = DISC_CHECK_LYING | DISC_CHECK_IMMOBILE
-
+	violates_masquerade = FALSE
 	toggled = TRUE
 	duration_length = 2 TURNS
 
@@ -93,7 +95,7 @@
 	desc = "Significantly improves your speed and reaction time."
 
 	check_flags = DISC_CHECK_LYING | DISC_CHECK_IMMOBILE
-
+	violates_masquerade = FALSE
 	toggled = TRUE
 	duration_length = 2 TURNS
 
@@ -131,7 +133,7 @@
 	desc = "Move faster. React in less time. Your body is under perfect control."
 
 	check_flags = DISC_CHECK_LYING | DISC_CHECK_IMMOBILE
-
+	violates_masquerade = TRUE
 	toggled = TRUE
 	duration_length = 2 TURNS
 
@@ -169,7 +171,7 @@
 	desc = "Breach the limits of what is humanly possible. Move like a lightning bolt."
 
 	check_flags = DISC_CHECK_LYING | DISC_CHECK_IMMOBILE
-
+	violates_masquerade = TRUE
 	toggled = TRUE
 	duration_length = 2 TURNS
 
@@ -207,7 +209,7 @@
 	desc = "You are like light. Blaze your way through the world."
 
 	check_flags = DISC_CHECK_LYING | DISC_CHECK_IMMOBILE
-
+	violates_masquerade = TRUE
 	toggled = TRUE
 	duration_length = 2 TURNS
 
