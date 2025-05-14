@@ -52,5 +52,5 @@
 ///Power is a Chi Art of the Kindred of the East game line
 #define POWER_TYPE_CHI_ART "chi_art"
 
-#define DISCIPLINE_GROUP_NONE 0
-#define DISCIPLINE_GROUP_COMBAT 1
+#define DISCIPLINE_POWER_GROUP_NONE 0
+#define DISCIPLINE_POWER_GROUP_COMBAT 1

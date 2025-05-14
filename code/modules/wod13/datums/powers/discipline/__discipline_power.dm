@@ -48,7 +48,7 @@
 	/// List of Discipline power types that cannot be activated alongside this power and share a cooldown with it.
 	var/list/grouped_powers
 	/// Group this Discipline belongs to. Only one discipline of a group may be active at a time. No cooldown is shared.
-	var/power_group = DISCIPLINE_GROUP_NONE
+	var/power_group = DISCIPLINE_POWER_GROUP_NONE
 
 	/* NOT MEANT TO BE OVERRIDDEN */
 	/// Timer(s) tracking the duration of the power. Can have multiple if multi_activate is true.
@@ -78,7 +78,7 @@
 		UnregisterSignal(owner, list(COMSIG_PARENT_QDELETING, COMSIG_POWER_ACTIVATE))
 	RegisterSignal(new_owner, COMSIG_PARENT_QDELETING, PROC_REF(on_owner_qdel))
 	owner = new_owner
-	if(power_group != DISCIPLINE_GROUP_NONE)
+	if(power_group != DISCIPLINE_POWER_GROUP_NONE)
 		RegisterSignal(owner, COMSIG_POWER_ACTIVATE, PROC_REF(on_other_power_activate))
 
 /**
