@@ -67,7 +67,6 @@
 		CRASH("discipline_power [src.name] created without a parent discipline!")
 
 	src.discipline = discipline
-	owner = discipline.owner
 
 /**
  * Setter to handle registering of signals.
